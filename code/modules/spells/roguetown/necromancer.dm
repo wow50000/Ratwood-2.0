@@ -410,7 +410,8 @@
 			// Set all minions to focus on the enemy target
 			src.process_minions(order_type = "attack", target = target, faction_tag = faction_tag)
 			return
-	to_chat(user, "<span class='notice'>You issue an order to your minions.</span>")
+	if((minions && minions.len) || (simple_minions && simple_minions.len))
+		to_chat(user, "<span class='notice'>You issue an order to your minions.</span>")
 
 //AI processing orders for simple mob undead
 /obj/effect/proc_holder/spell/invoked/command_undead/proc/process_minions(var/order_type, turf/target_location = null, mob/living/target = null, var/faction_tag = null)
@@ -449,7 +450,3 @@
 							else
 								minion.faction += "neutral"
 								msg = "[minion.name] calms down."
-	if(count>0)
-		to_chat(caster, "Ordered [count] minions to " + msg)
-	else
-		to_chat(caster, "We weren't able to order anyone.")

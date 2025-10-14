@@ -75,13 +75,12 @@
 /obj/structure/closet/dirthole/closed/loot/open()
 	if(!looted)
 		looted = TRUE
+		new /obj/item/natural/bundle/bone/rdm(src)
 		switch(lootroll)
 			if(1)
 				new /mob/living/carbon/human/species/skeleton/npc(mastert)
-				new /obj/item/natural/bundle/bone/rdm
 			if(2)
 				new /obj/structure/closet/crate/chest/lootbox(mastert)
-				new /obj/item/natural/bundle/bone/rdm
 	..()
 
 /obj/structure/closet/dirthole/closed/loot/examine(mob/user)
