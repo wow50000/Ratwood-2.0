@@ -45,7 +45,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			dat += "<div align='center'>[ooc_extra]</div>"
 		if(nsfw_headshot_link)
 			dat += "<br><div align='center'><b>NSFW</b></div>"
-		if(nsfw_headshot_link && !wear_armor && !wear_shirt)
+		if(nsfw_headshot_link && ((isobserver(usr) && usr.client && usr.client.holder) || (!wear_armor && !wear_shirt)))
 			dat += ("<br><div align='center'><img src='[nsfw_headshot_link]' width='600px'></div>")
 		else if(nsfw_headshot_link && (wear_armor || wear_shirt))
 			dat += "<br><center><i><font color = '#9d0080'; font size = 5>There is more to see but they are not naked...</font></i></center>"
@@ -122,6 +122,13 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		if(slot in check_obscured_slots(TRUE))
 			to_chat(usr, span_warning("I can't reach that! Something is covering it."))
 			return
+
+	if(href_list["species_lore"])
+		if(!dna?.species?.desc)
+			return
+		var/datum/browser/popup = new(usr, "species_info", "<center>BESTIARY</center>", 460, 550)
+		popup.set_content(dna.species.desc)
+		popup.open()
 
 	if(href_list["undiesthing"]) //canUseTopic check for this is handled by mob/Topic()
 		if(!get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
