@@ -1859,7 +1859,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Hedonism"
 	desc = "A Holy Rune of Baotha. Relief for the broken hearted."
 	icon_state = "baotha_chalky"
-	var/baotharites = list("Conversion")
+	var/baotharites = list("Conversion", "test name")
 
 /obj/structure/ritualcircle/psydon // done as a joke, but it is good for Psydonites to decorate with.
 	name = "Rune of Enduring"
@@ -1876,12 +1876,12 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
 		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
 		return
+	if(!Adjacent(user))
+		to_chat(user, "You must stand close to the rune to receive Baotha's blessing.")
+		return
 	var/riteselection = input(user, "Rituals of Desire", src) as null|anything in baotharites
 	switch(riteselection) // put ur rite selection here
 		if("Conversion")
-			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to receive Baotha's blessing.")
-				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
 				if(HAS_TRAIT(peep, TRAIT_DEPRAVED))
@@ -1900,10 +1900,36 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 					if(do_after(user, 50))
 						user.say("#The world's momentary pleasures have left us wanting...") // can someone else write this instead of me
 						if(do_after(user, 50))
-							icon_state = "eora_active" // hello mister placeholder
+							icon_state = "baotha_active"
 							baothaconversion(target) // removed CD bc it's gonna be coal to sit there and wait for it to go off rite cooldown, this one is purely social in its nature
 							spawn(120)
-								icon_state = "eora_chalky" // hello mister placeholder
+								icon_state = "baotha_chalky"
+		if("test name")
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(HAS_TRAIT(peep, TRAIT_DEPRAVED))
+					continue
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, "No valid targets on the rune!")
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			if(target.getorganslot(ORGAN_SLOT_VAGINA))
+				to_chat(user, "Those who can naturally bear a child cannot receive this blessing!")
+				return
+			if(do_after(user, 50))
+				user.say("one")
+				if(do_after(user, 50))
+					user.say("two")
+					if(do_after(user, 50))
+						user.say("three")
+						if(do_after(user, 50))
+							icon_state = "baotha_active" 
+							baothablessing(target)
+							spawn(120)
+								icon_state = "baotha_chalky"
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -1958,4 +1984,34 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 		target.emote("Agony")
 		target.apply_damage(100, BURN, BODY_ZONE_HEAD)
+		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
+
+/obj/structure/ritualcircle/baotha/proc/baothablessing(mob/living/carbon/human/target)
+	if(!target || QDELETED(target) || target.loc != loc)
+		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Baotha's blessing.")
+		return
+	if(HAS_TRAIT(target, TRAIT_BAOTHATEST))
+		loc.visible_message(span_cult("They have already been blessed!"))
+		return
+	var/prompt = alert(target, "Goddess of corrupted affection is about to let you bear childer!",, "Let it happen...", "I reject!")
+	if(promt = "Let it happen...")
+		to_chat(target, span_warning("A strange feeling of warmth appears inside your abdomen, growing hotter and hotter untill it almost feels like you are on fire, but pain actually never comes..."))
+		target.Stun(60)
+		target.Knockdown(60)
+		target.sexcon.set_arousal(100)
+		loc.visible_message(span_cult("[target] moans and shivers ontop on the rune. Body of purple flames dances on their lower abdomen as a new marking appears there."))
+		spawn(20)
+		
+		playsound(target, 'sound/health/fastbeat.ogg', 60)
+		playsound(loc, 'sound/ambience/creepywind.ogg', 80)
+		target.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE) // hue hue hue
+		spawn(40)
+		to_chat(target, span_purple("Enjoy new yourself!"))
+	if(promt = "I reject!")
+		to_chat(target, span_warning("I sincerely proposed you my greatest blessing, and you rejected me? How foolish!"))
+		target.Stun(60)
+		target.Knockdown(60)
+		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+		target.emote("Agony")
+		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))

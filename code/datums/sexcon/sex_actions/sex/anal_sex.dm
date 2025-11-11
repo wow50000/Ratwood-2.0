@@ -46,6 +46,8 @@
 		user.visible_message(span_love("[user] cums into [target]'s butt!"))
 		user.sexcon.cum_into(splashed_user = target)
 		user.virginity = FALSE
+		if(HAS_TRAIT(target, TRAIT_BAOTHATEST))
+			user.try_impregnate(target)
 
 	if(user.sexcon.considered_limp())
 		user.sexcon.perform_sex_action(target, 1.2, 4, FALSE)
@@ -94,6 +96,8 @@
 		user.visible_message(span_love("[user] cums into [target]'s butt!"))
 		user.sexcon.cum_into(splashed_user = target)
 		user.virginity = FALSE
+		if(HAS_TRAIT(target, TRAIT_BAOTHATEST))
+			user.try_impregnate(target)
 
 	if(user.sexcon.considered_limp())
 		user.sexcon.perform_sex_action(target, 1.2, 4, FALSE)
