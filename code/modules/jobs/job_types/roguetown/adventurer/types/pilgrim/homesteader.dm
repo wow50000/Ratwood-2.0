@@ -159,7 +159,7 @@
 			// No stat changes for all-rounded
 
 	// SPECIALTY SELECTION
-	var/specialties = list("Homesteading", "Faithweaver", "Charlatan")
+	var/specialties = list("Homesteading", "Charlatan")
 	var/specialty_choice = input(H, "Select your specialty.", "Specialty Selection") as anything in specialties
 
 	switch(specialty_choice)
@@ -184,61 +184,7 @@
 			ADD_TRAIT(H, TRAIT_HOMESTEAD_EXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_SURVIVAL_EXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_OUTDOORSMAN, TRAIT_GENERIC)
-
-
-		if("Faithweaver")
-			to_chat(H, span_notice("You dabble in the mystical arts of magic, faith and bardic performance.")) // Mix of bard / magic and faith. Very bad at all of it. More like a fluff.
-
-			var/datum/inspiration/I = new /datum/inspiration(H)
-			I.grant_inspiration(H, bard_tier = BARD_T1)
-			if(H.mind)
-				var/weapons = list("Harp","Lute","Accordion","Guitar","Hurdy-Gurdy","Viola","Vocal Talisman", "Psyaltery", "Flute")
-				var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
-				H.set_blindness(0)
-				switch(weapon_choice)
-					if("Harp")
-						backr = /obj/item/rogue/instrument/harp
-					if("Lute")
-						backr = /obj/item/rogue/instrument/lute
-					if("Accordion")
-						backr = /obj/item/rogue/instrument/accord
-					if("Guitar")
-						backr = /obj/item/rogue/instrument/guitar
-					if("Hurdy-Gurdy")
-						backr = /obj/item/rogue/instrument/hurdygurdy
-					if("Viola")
-						backr = /obj/item/rogue/instrument/viola
-					if("Vocal Talisman")
-						backr = /obj/item/rogue/instrument/vocals
-					if("Psyaltery")
-						backr = /obj/item/rogue/instrument/psyaltery
-					if("Flute")
-						backr = /obj/item/rogue/instrument/flute
-
-
-//No mage armour.
-			ADD_TRAIT(H, TRAIT_DEATHSIGHT, TRAIT_GENERIC)
-			ADD_TRAIT(H, TRAIT_SURVIVAL_EXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
-			ADD_TRAIT(H, TRAIT_SENTINELOFWITS, TRAIT_GENERIC)
-			H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_NOVICE, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_NOVICE, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/magic/druidic, SKILL_LEVEL_NOVICE, TRUE) //Just flavour
-			H.mind?.adjust_spellpoints(4) // Worse than the witch by two points.
-
-
-			var/datum/devotion/C = new /datum/devotion(H, H.patron)
-			C.grant_miracles(H, cleric_tier = CLERIC_T0, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_0)
-
-			if(H.mind)
-				H.mind.special_items["Sheathe"] = /obj/item/rogueweapon/scabbard/sheath
-				H.mind.special_items["Hunting Knife"] = /obj/item/rogueweapon/huntingknife
-				H.mind.special_items["[pick("Good", "Bad", "Normal")] Day's Wine"] = /obj/item/reagent_containers/glass/bottle/rogue/wine
-				H.mind.special_items["Barber's Innocuous Bag"] = /obj/item/storage/belt/rogue/surgery_bag/full
-				H.mind.special_items["Fishing Rod"] = /obj/item/fishingrod/crafted
-				H.mind.special_items["Pan for Frying"] = /obj/item/cooking/pan
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-
 
 
 		if("Charlatan")
