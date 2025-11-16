@@ -1859,7 +1859,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Hedonism"
 	desc = "A Holy Rune of Baotha. Relief for the broken hearted."
 	icon_state = "baotha_chalky"
-	var/baotharites = list("Conversion", "Fertility Seal of Baotha")
+	var/baotharites = list("Conversion", "Embodiment of Male Fertility")
 
 /obj/structure/ritualcircle/psydon // done as a joke, but it is good for Psydonites to decorate with.
 	name = "Rune of Enduring"
@@ -1904,7 +1904,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 							baothaconversion(target) // removed CD bc it's gonna be coal to sit there and wait for it to go off rite cooldown, this one is purely social in its nature
 							spawn(120)
 								icon_state = "baotha_chalky"
-		if("Fertility Seal of Baotha")
+		if("Embodiment of Male Fertility")
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
 				valids_on_rune += peep
