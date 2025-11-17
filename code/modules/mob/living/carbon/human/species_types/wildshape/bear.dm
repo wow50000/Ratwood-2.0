@@ -46,6 +46,7 @@
 		TRAIT_CRITICAL_RESISTANCE, // They have this due to low constitution. So they are not freakish tanky by default.
 		TRAIT_NOPAINSTUN,
 		TRAIT_CIVILIZEDBARBARIAN, //They can't punch, more like to kick people.
+		TRAIT_BIGGUY,
 	)
 	inherent_biotypes = MOB_HUMANOID
 	armor = 5

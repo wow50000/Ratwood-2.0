@@ -21,7 +21,7 @@
 		src.STASPD = 16
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/foxclaws)
-		real_name = "Vernard ([stored_mob.real_name])" //So we don't get a random name
+		real_name = "Vernard" //So we don't get a random name
 		faction += "wolfs" // Foxes have the same faction code-wise so leaving it for now
 
 // FOX SPECIES DATUM //

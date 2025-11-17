@@ -23,7 +23,7 @@
 		src.STALUC = 15 //Xylyx's critters
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/cabbitclaws)
-		real_name = "Cabbit ([stored_mob.real_name])" //So we don't get a random name
+		real_name = "Cabbit" //So we don't get a random name
 		faction += "cabbits"
 
 // CABBIT SPECIES DATUM //
