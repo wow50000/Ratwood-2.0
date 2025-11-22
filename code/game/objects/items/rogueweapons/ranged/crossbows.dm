@@ -206,6 +206,8 @@
 	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
 
 //Pseudo-Arbalest. This thing is intended to be fuckhuge, but it's using a temp sprite.
+//Retains an identical damage to the standard crossbow. The pen is what makes this.
+//That's an aside to the silver stake, which does 50, instead of the sunderbolt's 35, AND keeps the pen.
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest
 	name = "sauterelle"
 	desc = "An incredibly heavy crossbow, designed for a dedicated arbalist to wield. \
@@ -216,7 +218,6 @@
 	fire_sound = 'sound/combat/Ranged/firebow-shot-02.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	chargingspeed = 60//+20
-	damfactor = 1.5//+30% over standard.
 	reloadtime = 8 SECONDS//Oh, yes...
 	hasloadedsprite = TRUE
 	penfactor = 1.5//We want this to go through, no matter what, effectively.
